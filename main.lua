@@ -106,9 +106,9 @@ function library:RunToggle(text)
 	    end
 	end
 	if foundCallback then
-	    local text = v[1]
-	    local callback = v[2]
-	    local filler = v[3]
+	    local text = foundCallback[1]
+	    local callback = foundCallback[2]
+	    local filler = foundCallback[3]
 	    filler.Visible = not filler.Visible
 	    callback(filler.Visible)
 	end
