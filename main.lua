@@ -98,6 +98,21 @@ function library:Keybind(key)
     end)
 end
 
+function library:RunToggle(text)
+	local foundCallback
+	for _,v in next, callbacks do
+	    if text == v[1] then
+		foundCallback = v
+	    end
+	end
+	if foundCallback then
+	    local text = v[1]
+	    local callback = v[2]
+	    local filler = v[3]
+	    filler.Visible = not filler.Visible
+	    callback(filler.Visible)
+	end
+end
 function library:Window(name) 
     windowCount = windowCount + 1
     local winCount = windowCount
@@ -282,21 +297,6 @@ function library:Window(name)
         ToggleFiller.ZIndex = 2 + zindex
         pastSliders[winCount] = false
         table.insert(callbacks, {text, callback, ToggleFiller})
-    end
-    function functions:RunToggle(text)
-        local foundCallback
-        for _,v in next, callbacks do
-            if text == v[1] then
-                foundCallback = v
-            end
-        end
-        if foundCallback then
-            local text = v[1]
-            local callback = v[2]
-            local filler = v[3]
-            filler.Visible = not filler.Visible
-            callback(filler.Visible)
-        end
     end
     function functions:Box(text, callback)
         local callback = callback or function() end
