@@ -298,7 +298,7 @@ function library:Window(name)
         pastSliders[winCount] = false
         table.insert(callbacks, {text, callback, ToggleFiller})
     end
-    function functions:Box(text, callback)
+    function functions:Box(text, enterpressed, callback)
         local callback = callback or function() end
 
         sizes[winCount] = sizes[winCount] + 32
@@ -323,8 +323,14 @@ function library:Window(name)
         TextBox:GetPropertyChangedSignal('Text'):connect(function()
             callback(TextBox.Text, false)
         end)
-        TextBox.FocusLost:Connect(function()
-            callback(TextBox.Text, true)
+        TextBox.FocusLost:Connect(function(ep)
+	    if enterpressed then
+	    	if ep then
+		     callback(TextBox.Text, true)
+		end
+	    else
+            	callback(TextBox.Text, true)
+	    end
         end)
 
         BoxDescription.Name = "BoxDescription"
